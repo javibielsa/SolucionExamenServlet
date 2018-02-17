@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
+    <display-name>Archetype Created Web Application</display-name>
+    
+    
+    <servlet>
+		<servlet-name>RegisterVideogameServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.RegisterVideogameServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>RegisterConsoleServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.RegisterConsoleServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>RegisterCompanyServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.RegisterCompanyServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ListVideogamesServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.ListVideogamesServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ListConsolesServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.ListConsolesServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ListCompaniesServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.ListCompaniesServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>OpenCompaniesServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.OpenCompaniesServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>OpenConsolesServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.OpenConsolesServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ListConsolesCompanyServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.ListConsolesCompanyServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ListVideogamesConsoleServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.ListVideogamesConsoleServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ListRecommendedAgeServlet</servlet-name>
+		<servlet-class>es.salesianos.servlet.ListRecommendedAgeServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>RegisterVideogameServlet</servlet-name>
+		<url-pattern>registervideogame</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>RegisterConsoleServlet</servlet-name>
+		<url-pattern>registerconsole</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>RegisterCompanyServlet</servlet-name>
+		<url-pattern>registercompany</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ListVideogamesServlet</servlet-name>
+		<url-pattern>listVideogames</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ListConsolesServlet</servlet-name>
+		<url-pattern>listConsoles</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ListCompaniesServlet</servlet-name>
+		<url-pattern>listCompanies</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>OpenCompaniesServlet</servlet-name>
+		<url-pattern>openCompanies</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>OpenConsolesServlet</servlet-name>
+		<url-pattern>openConsoles</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ListConsolesCompanyServlet</servlet-name>
+		<url-pattern>listConsolesByCompany</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ListVideogamesConsoleServlet</servlet-name>
+		<url-pattern>listVideogamesByConsole</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ListRecommendedAgeServlet</servlet-name>
+		<url-pattern>listByRecommendedAge</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>ListRecommendedAge.jsp</welcome-file>
+	</welcome-file-list>
+    
+</web-app>
