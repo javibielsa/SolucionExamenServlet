@@ -19,7 +19,7 @@ public class RegisterConsoleServlet extends HttpServlet{
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Console consola = service.assembleObjectFromRequest(req);
-		service.insertOrUpdate(consola);
+		service.insert(consola);
 		redirect(req,resp);
 		
 	}

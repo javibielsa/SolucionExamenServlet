@@ -5,21 +5,15 @@ import java.util.List;
 import es.salesianos.model.Videogame;
 
 public interface Repository<T> {
+	
+	public static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'";
 
-	void insert(T t);
+	public void insert(T t);
 
-	void delete(T t);
+	public void delete(T t);
 
-	void update(T t);
+	public List<T> searchAll();
 
-	List<T> searchAll();
-
-	T search(T ObjectInFormulary);
-
-	List<Videogame> searchByRecommendedAge(String recommendedAge);
-
-	List<Videogame> searchByConsole(String consoleName);
-
-	List<Videogame> orderTitles();
+	public T search(T objectInFormulary);
 
 }

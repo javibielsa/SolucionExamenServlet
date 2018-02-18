@@ -15,10 +15,10 @@
 <h2>REGISTRO DE EMPRESAS</h2>
 <form action="registercompany" method="post">
 		<span>Nombre:</span> 
-		<input type="text" name="nombre"/><br/>
+		<input type="text" name="name"/><br/>
 		
 		<span>Fecha de creación:</span><br/>
-		<input type="date" name="fechaCreacion"/><br/>
+		<input type="date" name="creationDate"/><br/>
 		
 		<input type="submit" Value="Dar de alta"/>
 </form>

@@ -21,13 +21,12 @@ public class ConsoleService implements Service<Console>{
 		return assembler.assembleObjectFrom(req);
 	}
 	
-	public void insertOrUpdate(Console consolaFormulario) {
-		Console consolaInDatabase = repository.search(consolaFormulario);
-		if(null == consolaInDatabase){
-			repository.insert(consolaFormulario);
-		}else{
-			repository.update(consolaFormulario);
-		}
+	public void insert(Console consolaFormulario) {
+		repository.insert(consolaFormulario);
+	}
+	
+	public void delete(Console formularyObject) {
+		repository.delete(formularyObject);
 	}
 	
 	public List<Console> listAll(){
@@ -35,26 +34,8 @@ public class ConsoleService implements Service<Console>{
 	}
 	
 	public List<Console> listByCompany(String empresaFormulario){
-		
 		return repository.searchByCompany(empresaFormulario);
 	}
 
-	@Override
-	public List<Console> listByConsole(String consoleName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Videogame> listByRecommendedAge(String parameter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Videogame> orderByTitle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

@@ -2,7 +2,7 @@
 <%@page import="es.salesianos.model.Console"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.io.*,java.util.*,es.salesianos.model.*"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,55 +16,31 @@
 	
 	<form action="listVideogamesByConsole" method="post">
 		<input type="submit" value="Mostrar lista"/><br/>
-	 <%
-		 List<Console> console = (List<Console>)request.getAttribute("listAllConsoles");
-		 pageContext.setAttribute("console", console);
-		 %>
-		 <span>SELECCIONA LA EMPRESA:</span><br/>
-			<%
-			out.println("<select name='selectConsole'>");
-			if(null != console && !console.isEmpty()){
-				for (Console console1 : console) {
-					out.println("<option value='"+console1.getName()+"'>"+console1.getName()+"</option>");
-				}
-			}
-			out.println("</select>");
-			%>
+		<span>SELECCIONA LA CONSOLA:</span><br/>
+		<select name="selectConsole">
+			<c:forEach var="console" items="${listAllConsoles}">
+				<option value="<c:out value="${console.name}"/>"><c:out value="${console.name}" /></option>
+			</c:forEach>
+		</select>
 	</form>
-		 <br>
-	<%
-	 List<Videogame> videogame = (List<Videogame>)request.getAttribute("listAllVideogames");
-	 pageContext.setAttribute("videogame", videogame);
-	 %>
+	<br>
 	
 	<table border="1">
 		<thead>
 			<tr>
 				<td>Nombre</td>
-				<td>Empresa</td>
+				<td>Fecha de creacion</td>
 			</tr>
 		</thead>
 		<tbody>
-		<%
-		if(null != videogame && !videogame.isEmpty()){
-			for (Videogame videogame1 : videogame) {
-				out.println("<tr>");
-				out.println("<td>");
-				out.println(""+videogame1.getTitle()+"");
-				out.println("</td>");
-				out.println("<td>");
-				out.println(""+videogame1.getRecommendedAge()+"");
-				out.println("</td>");
-				out.println("<td>");
-				out.println(""+videogame1.getReleaseDate()+"");
-				out.println("</td>");
-				out.println("<td>");
-				out.println(""+videogame1.getConsoleName()+"");
-				out.println("</td>");
-				out.println("</tr>");
-			}
-		}
-		%>
+			<c:forEach var="videogame" items="${listAllVideogames}">
+				<tr>
+					<td><c:out value="${videogame.title}" /></td>
+					<td><c:out value="${videogame.recommendedAge}" /></td>
+					<td><c:out value="${videogame.releaseDate}" /></td>
+					<td><c:out value="${videogame.consoleName}" /></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 

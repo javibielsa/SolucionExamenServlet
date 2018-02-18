@@ -13,7 +13,7 @@ public class ConsoleAssembler implements Assembler<Console>{
 	
 	public Console assembleObjectFrom(HttpServletRequest req) {
 		Console console = new Console();
-		console.setName(req.getParameter("nombre"));
+		console.setName(req.getParameter("name"));
 		Company company = new Company();
 		company.setName(req.getParameter("selectCompany"));
 		console.setCompany(repository.search(company));

@@ -8,8 +8,8 @@ public class CompanyAssembler implements Assembler<Company>{
 	
 	public Company assembleObjectFrom(HttpServletRequest req) {
 		Company company = new Company();
-		company.setName(req.getParameter("nombre"));
-		company.setCreationDate(req.getParameter("fechaCreacion"));
+		company.setName(req.getParameter("name"));
+		company.setCreationDate(req.getParameter("creationDate"));
 		return company;
 	}
 

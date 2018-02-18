@@ -19,23 +19,16 @@
 	</form>
 	<form action="registerconsole" method="post">
 		<span>Nombre:</span> 
-		<input type="text" name="nombre"/><br/>
-		 <%
-		 List<Company> company = (List<Company>)request.getAttribute("listAllCompanies");
-		 pageContext.setAttribute("company", company);
-		 %>
-		 <span>Empresa:</span><br/>
-		 <select name="selectCompany">
-			<%
-			if(null != company && !company.isEmpty()){
-				for (Company user2 : company) {
-					out.println("<option value='"+user2.getName()+"'>"+user2.getName()+"</option>");
-				}
-			}
-			%>
-		 </select>
-		
-		
+		<input type="text" name="name"/><br/>
+		<span>Empresa:</span>
+		<select name="selectCompany">
+			<c:forEach var="company" items="${listAllCompanies}">
+	
+					<option value="<c:out value="${company.name}" />"><c:out value="${company.name}" /></option>
+				
+			</c:forEach>
+		</select>
+		<br/>
 		<br/>
 			
 		<input type="submit" Value="Dar de alta"/>

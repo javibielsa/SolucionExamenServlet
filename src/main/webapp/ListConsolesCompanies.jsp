@@ -16,28 +16,16 @@
 	
 	<form action="listConsolesByCompany" method="post">
 		<input type="submit" value="Mostrar lista"/><br/>
-	 <%
-		 List<Company> company = (List<Company>)request.getAttribute("listAllCompanies");
-		 pageContext.setAttribute("company", company);
-		 %>
-		 <span>SELECCIONA LA EMPRESA:</span><br/>
-			<%
-			out.println("<select name='selectCompany'>");
-			if(null != company && !company.isEmpty()){
-				for (Company company1 : company) {
-					out.println("<option value='"+company1.getName()+"'>"+company1.getName()+"</option>");
-				}
-			}
-			out.println("</select>");
-			%>
-	</form>
-		 <br>
-	<%
-	 List<Console> consola = (List<Console>)request.getAttribute("listAllConsoles");
-	 pageContext.setAttribute("consola", consola);
-	 %>
+		
+		<select name="selectCompany">
+			<c:forEach var="company" items="${listAllCompanies}">
 	
-	<table border="1">
+					<option value="<c:out value="${company.name}" />"><c:out value="${company.name}" /></option>
+				
+			</c:forEach>
+		</select>
+		<br/>
+		<table border="1">
 		<thead>
 			<tr>
 				<td>Nombre</td>
@@ -45,20 +33,12 @@
 			</tr>
 		</thead>
 		<tbody>
-		<%
-		if(null != consola && !consola.isEmpty()){
-			for (Console consola1 : consola) {
-				out.println("<tr>");
-				out.println("<td>");
-				out.println(""+consola1.getName()+"");
-				out.println("</td>");
-				out.println("<td>");
-				out.println(""+consola1.getCompany().getName()+"");
-				out.println("</td>");
-				out.println("</tr>");
-			}
-		}
-		%>
+			<c:forEach var="console" items="${listAllConsoles}">
+				<tr>
+					<td><c:out value="${console.name}" /></td>
+					<td><c:out value="${console.company.name}" /></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 

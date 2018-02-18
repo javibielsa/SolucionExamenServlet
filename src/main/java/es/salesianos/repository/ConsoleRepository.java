@@ -14,15 +14,14 @@ import es.salesianos.model.Videogame;
 
 public class ConsoleRepository implements Repository<Console>{
 	
-	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'";
 	private static final String SELECT = "SELECT * FROM CONSOLAS";
 	private static final String INSERT = "INSERT INTO CONSOLAS (nombre,empresa)";
-	private static final String DELETE = "DELETE * FROM CONSOLAS";
+	private static final String DELETE = "DELETE * FROM CONSOLAS WHERE nombre = ?";
 	
-	H2Connection manager = new H2Connection();
-	CompanyRepository repository = new CompanyRepository();
+	private H2Connection manager = new H2Connection();
+	private CompanyRepository repository = new CompanyRepository();
 	
-	public Console search(Console ObjectInFormulary) {
+	public Console search(Console objectInFormulary) {
 		Console console = new Console();
 		Connection conn = null;
 		ResultSet resultSet = null;
@@ -30,7 +29,7 @@ public class ConsoleRepository implements Repository<Console>{
 		try {
 			conn = manager.open(jdbcUrl);
 			prepareStatement = conn.prepareStatement(SELECT+" WHERE nombre = ?");
-			prepareStatement.setString(1, ObjectInFormulary.getName());
+			prepareStatement.setString(1, objectInFormulary.getName());
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				Console ConsoleInDatabase = new Console();
@@ -45,8 +44,8 @@ public class ConsoleRepository implements Repository<Console>{
 		}finally {
 			manager.close(resultSet);
 			manager.close(prepareStatement);
+			manager.close(conn);
 		}
-		manager.close(conn);
 		return console;
 	}
 	
@@ -76,12 +75,12 @@ public class ConsoleRepository implements Repository<Console>{
 		}finally {
 			manager.close(resultSet);
 			manager.close(prepareStatement);
+			manager.close(conn);
 		}
-		manager.close(conn);
 		return listConsoles;
 	}
 	
-	public List<Console> searchByCompany(String empresaFormulario) {
+	public List<Console> searchByCompany(String formConsole) {
 		List<Console> listConsoles= null;
 		Connection conn = null;
 		ResultSet resultSet = null;
@@ -90,7 +89,7 @@ public class ConsoleRepository implements Repository<Console>{
 			listConsoles= new ArrayList<Console>();
 			conn = manager.open(jdbcUrl);
 			prepareStatement = conn.prepareStatement(SELECT + " WHERE empresa = ?");
-			prepareStatement.setString(1, empresaFormulario);
+			prepareStatement.setString(1, formConsole);
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				Console ConsoleInDatabase = new Console();
@@ -107,69 +106,43 @@ public class ConsoleRepository implements Repository<Console>{
 		}finally {
 			manager.close(resultSet);
 			manager.close(prepareStatement);
+			manager.close(conn);
 		}
-		manager.close(conn);
 		return listConsoles;
 	}
 	
-	public void insert(Console ConsoleInFormulary) {
+	public void insert(Console formConsole) {
 		Connection conn = manager.open(jdbcUrl);;
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = conn.prepareStatement(INSERT + " VALUES (?, ?)");
-			preparedStatement.setString(1, ConsoleInFormulary.getName());
-			preparedStatement.setString(2, ConsoleInFormulary.getCompany().getName());
+			preparedStatement.setString(1, formConsole.getName());
+			preparedStatement.setString(2, formConsole.getCompany().getName());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}finally {
 			manager.close(preparedStatement);
+			manager.close(conn);
 		}
-		manager.close(conn);
 	}
 	
-	public void delete(Console ConsoleInFormulary) {
+	public void delete(Console formConsole) {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			conn = manager.open(jdbcUrl);
-			preparedStatement = conn.prepareStatement(DELETE + " WHERE nombre = ?");
-			preparedStatement.setString(1, ConsoleInFormulary.getName());
+			preparedStatement = conn.prepareStatement(DELETE);
+			preparedStatement.setString(1, formConsole.getName());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}finally {
 			manager.close(preparedStatement);
+			manager.close(conn);
 		}
-		manager.close(conn);
-	}
-	
-	public void update(Console ConsoleInFormulary) {
-		Connection conn = manager.open(jdbcUrl);
-		manager.close(conn);
-	}
-
-
-	@Override
-	public List<Videogame> searchByRecommendedAge(String recommendedAge) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Videogame> searchByConsole(String consoleName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Videogame> orderTitles() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

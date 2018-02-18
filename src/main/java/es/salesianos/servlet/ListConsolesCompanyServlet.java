@@ -18,7 +18,7 @@ import es.salesianos.service.Service;
 
 public class ListConsolesCompanyServlet extends HttpServlet{
 	
-private Service<Console> service = new ConsoleService();
+private ConsoleService service = new ConsoleService();
 private Service<Company> companyService = new CompanyService();
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

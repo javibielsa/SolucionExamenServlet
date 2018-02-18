@@ -20,41 +20,16 @@ public class CompanyService implements Service<Company>{
 		return as.assembleObjectFrom(req);
 	}
 	
-	public void insertOrUpdate(Company CompanyInFormulario) {
-		Company CompanyInDatabase = repository.search(CompanyInFormulario);
-		if(null == CompanyInDatabase){
-			repository.insert(CompanyInFormulario);
-		}else{
-			repository.update(CompanyInFormulario);
-		}
+	public void insert(Company formularyCompany) {
+		repository.insert(formularyCompany);
+	}
+	
+	public void delete(Company formularyCompany) {
+		repository.delete(formularyCompany);;
 	}
 
 	public List<Company> listAll(){
 		return repository.searchAll();
-	}
-
-	@Override
-	public List<Company> listByCompany(String companyName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Company> listByConsole(String consoleName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Videogame> listByRecommendedAge(String parameter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Videogame> orderByTitle() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

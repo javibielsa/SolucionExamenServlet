@@ -16,16 +16,12 @@
 	<form action="openConsoles" method="post">
 		<input type="submit" value="Mostrar consola"/><br/>
 	</form>
-	<%
-		List<Console> console = (List<Console>)request.getAttribute("listAllConsoles");
-		pageContext.setAttribute("console", console);
-	%>
 	<form action="registervideogame" method="post">
 		<span>Titulo:</span> 
-		<input type="text" name="titulo"/><br/>
+		<input type="text" name="title"/><br/>
 		
 		<span>Edad recomendada:</span> 
-		<select name="edadRecomendada" id="edadRecomendada">
+		<select name="recommendedAge" id="recommendedAge">
 			<option value="TP">TP</option>
             <option value="+7" selected>+7</option>
             <option value="+13">+13</option>
@@ -33,19 +29,16 @@
 		</select><br/>
 		
 		<span>Fecha de lanzamiento:</span> 
-		<input type="date" name="fechaLanzamiento"/><br/>
-		<span>Consola:</span> 
-		<select name="nombreConsola">
-		<%
-		if(null != console && !console.isEmpty()){
-			for (Console user2 : console) {
-				out.println("<option value='"+user2.getName()+"'>"+user2.getName()+"</option>");
-			}
-		}
-		%>
-		</select>
-		<br/>
+		<input type="date" name="releaseDate"/><br/>
 		
+		<span>Consola:</span> 
+		<select name="consoleName">
+			<c:forEach var="console" items="${listAllConsoles}">
+	
+					<option value="<c:out value="${console.name}" />"><c:out value="${console.name}" /></option>
+				
+			</c:forEach>
+		</select><br>
 		<input type="submit" Value="Dar de alta"/>
 	</form>
 </body>

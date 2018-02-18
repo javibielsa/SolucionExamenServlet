@@ -2,7 +2,7 @@
 <%@page import="es.salesianos.model.Console"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.io.*,java.util.*,es.salesianos.model.*"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,11 +17,6 @@
 		<input type="submit" value="Ver listado">
 	</form>
 	<br/>
-	<%
-	 List<Console> consola = (List<Console>)request.getAttribute("listAllConsoles");
-	 pageContext.setAttribute("consola", consola);
-	 %>
-	
 	<table border="1">
 		<thead>
 			<tr>
@@ -30,26 +25,15 @@
 			</tr>
 		</thead>
 		<tbody>
-		<%
-		if(null != consola && !consola.isEmpty()){
-			for (Console user2 : consola) {
-				out.println("<form action='deleteCompany' method='post'>");
-				out.println("<tr>");
-				out.println("<td>");
-				out.println("<input type='text' name='nombre' value="+user2.getName()+" style='display:none' disabled>"+user2.getName()+"");
-				out.println("</td>");
-				out.println("<td>");
-				out.println("<input type='text' name='empresa' value="+user2.getCompany().getName()+" style='display:none' disabled>"+user2.getCompany().getName()+"");
-				out.println("</td>");
-				out.println("<td>");
-				out.println("<input type='submit' value='Eliminar'></form>");
-				out.println("</td>");
-				out.println("</tr>");
-			}
-		}
-		%>
+			<c:forEach var="console" items="${listAllConsoles}">
+				<tr>
+					<td><c:out value="${console.name}" /></td>
+					<td><c:out value="${console.company.name}" /></td>
+					<td><a href="/delete?name=${console.name}">Borrar</a></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
-
+	
 </body>
 </html>

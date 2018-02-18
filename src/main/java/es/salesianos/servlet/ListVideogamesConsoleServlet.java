@@ -18,8 +18,8 @@ import es.salesianos.service.VideogameService;
 
 public class ListVideogamesConsoleServlet extends HttpServlet{
 	
-private Service<Console> consoleService = new ConsoleService();
-private Service<Videogame> service = new VideogameService();
+private ConsoleService consoleService = new ConsoleService();
+private VideogameService service = new VideogameService();
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Console> listAllConsoles = consoleService.listAll();

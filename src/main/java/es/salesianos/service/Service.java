@@ -9,19 +9,13 @@ import es.salesianos.model.Videogame;
 
 public interface Service<T> {
 
-	T assembleObjectFromRequest(HttpServletRequest req);
+	public T assembleObjectFromRequest(HttpServletRequest req);
 
-	List<T> listAll();
+	public List<T> listAll();
 
-	void insertOrUpdate(T ObjectInFormulary);
-
-	List<T> listByCompany(String companyName);
-
-	List<T> listByConsole(String consoleName);
-
-	List<Videogame> listByRecommendedAge(String parameter);
-
-	List<Videogame> orderByTitle();
+	public void insert(T formularyObject);
+	
+	public void delete(T formularyObject);
 	
 
 }

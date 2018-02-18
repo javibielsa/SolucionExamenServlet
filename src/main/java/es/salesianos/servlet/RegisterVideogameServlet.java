@@ -20,7 +20,7 @@ public class RegisterVideogameServlet extends HttpServlet{
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Videogame videogame = new VideogameAssembler().assembleObjectFrom(req);
-		service.insertOrUpdate(videogame);
+		service.insert(videogame);
 		redirect(req,resp);
 	}
 

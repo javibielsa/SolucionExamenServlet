@@ -8,10 +8,10 @@ public class VideogameAssembler implements Assembler<Videogame>{
 	
 	public Videogame assembleObjectFrom(HttpServletRequest req) {
 		Videogame videogame = new Videogame();
-		videogame.setTitle(req.getParameter("titulo"));
-		videogame.setRecommendedAge(req.getParameter("edadRecomendada"));
-		videogame.setReleaseDate(req.getParameter("fechaLanzamiento"));
-		videogame.setConsoleName(req.getParameter("nombreConsola"));
+		videogame.setTitle(req.getParameter("title"));
+		videogame.setRecommendedAge(req.getParameter("recommendedAge"));
+		videogame.setReleaseDate(req.getParameter("releaseDate"));
+		videogame.setConsoleName(req.getParameter("consoleName"));
 		return videogame;
 	}
 
