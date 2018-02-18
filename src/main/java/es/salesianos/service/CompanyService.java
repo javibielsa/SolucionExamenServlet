@@ -14,10 +14,10 @@ import es.salesianos.repository.CompanyRepository;
 public class CompanyService implements Service<Company>{
 	
 	private CompanyRepository repository = new CompanyRepository();
-	private Assembler<Company> as = new CompanyAssembler();
+	private Assembler<Company> assembler = new CompanyAssembler();
 	
 	public Company assembleObjectFromRequest(HttpServletRequest req) {
-		return as.assembleObjectFrom(req);
+		return assembler.assembleObjectFrom(req);
 	}
 	
 	public void insert(Company formularyCompany) {
