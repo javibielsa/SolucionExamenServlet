@@ -20,14 +20,14 @@ public class CompanyRepository implements Repository<Company>{
 	
 	private H2Connection manager = new H2Connection();
 	
-	public Company search(Company objectInFormulary) {
+	public Company search(Company company) {
 		Company CompanyInDatabase = new Company();
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
 		Connection conn = manager.open(jdbcUrl);
 		try {
 			prepareStatement = conn.prepareStatement(SELECT + " WHERE nombre = ?");
-			prepareStatement.setString(1, objectInFormulary.getName());
+			prepareStatement.setString(1, company.getName());
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				CompanyInDatabase.setName(resultSet.getString(1));
@@ -71,14 +71,14 @@ public class CompanyRepository implements Repository<Company>{
 		return listCompanys;
 	}
 
-	public void insert(Company CompanyInFormulary) {
+	public void insert(Company company) {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			conn = manager.open(jdbcUrl);
 			preparedStatement = conn.prepareStatement(INSERT);
-			preparedStatement.setString(1, CompanyInFormulary.getName());
-			preparedStatement.setDate(2, new java.sql.Date(CompanyInFormulary.getCreationDate().getTime()));
+			preparedStatement.setString(1, company.getName());
+			preparedStatement.setDate(2, new java.sql.Date(company.getCreationDate().getTime()));
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,13 +89,13 @@ public class CompanyRepository implements Repository<Company>{
 		manager.close(conn);
 	}
 	
-	public void delete(Company CompanyInFormulary) {
+	public void delete(Company company) {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			conn = manager.open(jdbcUrl);
 			preparedStatement = conn.prepareStatement(DELETE);
-			preparedStatement.setString(1, CompanyInFormulary.getName());
+			preparedStatement.setString(1, company.getName());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -22,7 +22,7 @@ public class ConsoleRepository implements Repository<Console>{
 	private CompanyRepository repository = new CompanyRepository();
 	
 	public Console search(Console objectInFormulary) {
-		Console console = new Console();
+		Console consoleInDatabase = new Console();
 		Connection conn = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -32,11 +32,10 @@ public class ConsoleRepository implements Repository<Console>{
 			prepareStatement.setString(1, objectInFormulary.getName());
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
-				Console ConsoleInDatabase = new Console();
-				ConsoleInDatabase.setName(resultSet.getString(1));
+				consoleInDatabase.setName(resultSet.getString(1));
 				Company company = new Company();
 				company.setName(resultSet.getString(2));
-				ConsoleInDatabase.setCompany(repository.search(company));
+				consoleInDatabase.setCompany(repository.search(company));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -46,7 +45,7 @@ public class ConsoleRepository implements Repository<Console>{
 			manager.close(prepareStatement);
 			manager.close(conn);
 		}
-		return console;
+		return consoleInDatabase;
 	}
 	
 	
@@ -61,13 +60,13 @@ public class ConsoleRepository implements Repository<Console>{
 			prepareStatement = conn.prepareStatement(SELECT);
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
-				Console ConsoleInDatabase = new Console();
-				ConsoleInDatabase.setName(resultSet.getString(1));
+				Console consoleInDatabase = new Console();
+				consoleInDatabase.setName(resultSet.getString(1));
 				Company company = new Company();
 				company.setName(resultSet.getString(2));
-				ConsoleInDatabase.setCompany(repository.search(company));
+				consoleInDatabase.setCompany(repository.search(company));
 				
-				listConsoles.add(ConsoleInDatabase);
+				listConsoles.add(consoleInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -92,13 +91,13 @@ public class ConsoleRepository implements Repository<Console>{
 			prepareStatement.setString(1, formConsole);
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
-				Console ConsoleInDatabase = new Console();
-				ConsoleInDatabase.setName(resultSet.getString(1));
+				Console consoleInDatabase = new Console();
+				consoleInDatabase.setName(resultSet.getString(1));
 				Company company = new Company();
 				company.setName(resultSet.getString(2));
-				ConsoleInDatabase.setCompany(repository.search(company));
+				consoleInDatabase.setCompany(repository.search(company));
 				
-				listConsoles.add(ConsoleInDatabase);
+				listConsoles.add(consoleInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

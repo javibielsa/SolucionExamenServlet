@@ -52,11 +52,6 @@ public class Videogame {
 	public void setConsoleName(String consoleName) {
 		this.consoleName = consoleName;
 	}
-	
-	public String dateToString() {
-		DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-		return formatoFecha.format(this.releaseDate);
-	}
 
 
 }
