@@ -20,12 +20,12 @@ public class CompanyService implements Service<Company>{
 		return assembler.assembleObjectFrom(req);
 	}
 	
-	public void insert(Company formularyCompany) {
-		repository.insert(formularyCompany);
+	public void insert(Company company) {
+		repository.insert(company);
 	}
 	
-	public void delete(Company formularyCompany) {
-		repository.delete(formularyCompany);;
+	public void delete(Company company) {
+		repository.delete(company);;
 	}
 
 	public List<Company> listAll(){

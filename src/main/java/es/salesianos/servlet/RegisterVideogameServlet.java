@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.salesianos.assembler.VideogameAssembler;
 import es.salesianos.model.Videogame;
 import es.salesianos.service.Service;
 import es.salesianos.service.VideogameService;
@@ -19,7 +18,7 @@ public class RegisterVideogameServlet extends HttpServlet{
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Videogame videogame = new VideogameAssembler().assembleObjectFrom(req);
+		Videogame videogame = service.assembleObjectFromRequest(req);
 		service.insert(videogame);
 		redirect(req,resp);
 	}

@@ -9,7 +9,6 @@ import java.util.List;
 
 import es.salesianos.connection.H2Connection;
 import es.salesianos.model.Company;
-import es.salesianos.model.Videogame;
 
 
 public class CompanyRepository implements Repository<Company>{
@@ -21,7 +20,7 @@ public class CompanyRepository implements Repository<Company>{
 	private H2Connection manager = new H2Connection();
 	
 	public Company search(Company company) {
-		Company CompanyInDatabase = new Company();
+		Company companyInDatabase = new Company();
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
 		Connection conn = manager.open(jdbcUrl);
@@ -30,8 +29,8 @@ public class CompanyRepository implements Repository<Company>{
 			prepareStatement.setString(1, company.getName());
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
-				CompanyInDatabase.setName(resultSet.getString(1));
-				CompanyInDatabase.setCreationDate(resultSet.getString(2));
+				companyInDatabase.setName(resultSet.getString(1));
+				companyInDatabase.setCreationDate(resultSet.getString(2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -42,7 +41,7 @@ public class CompanyRepository implements Repository<Company>{
 			manager.close(conn);
 			
 		}
-		return CompanyInDatabase;
+		return companyInDatabase;
 	}
 	
 	public List<Company> searchAll() {
@@ -55,10 +54,10 @@ public class CompanyRepository implements Repository<Company>{
 			prepareStatement = conn.prepareStatement(SELECT);
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
-				Company CompanyInDatabase = new Company();
-				CompanyInDatabase.setName(resultSet.getString(1));
-				CompanyInDatabase.setCreationDate(resultSet.getString(2));
-				listCompanys.add(CompanyInDatabase);
+				Company companyInDatabase = new Company();
+				companyInDatabase.setName(resultSet.getString(1));
+				companyInDatabase.setCreationDate(resultSet.getString(2));
+				listCompanys.add(companyInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

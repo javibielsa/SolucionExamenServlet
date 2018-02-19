@@ -21,20 +21,20 @@ public class ConsoleService implements Service<Console>{
 		return assembler.assembleObjectFrom(req);
 	}
 	
-	public void insert(Console consolaFormulario) {
-		repository.insert(consolaFormulario);
+	public void insert(Console console) {
+		repository.insert(console);
 	}
 	
-	public void delete(Console formularyObject) {
-		repository.delete(formularyObject);
+	public void delete(Console console) {
+		repository.delete(console);
 	}
 	
 	public List<Console> listAll(){
 		return repository.searchAll();
 	}
 	
-	public List<Console> listByCompany(String empresaFormulario){
-		return repository.searchByCompany(empresaFormulario);
+	public List<Console> listByCompany(String object){
+		return repository.searchByCompany(object);
 	}
 
 

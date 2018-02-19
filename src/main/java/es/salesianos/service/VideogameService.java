@@ -18,12 +18,12 @@ public class VideogameService implements Service<Videogame>{
 		return assembler.assembleObjectFrom(req);
 	}
 
-	public void insert(Videogame formularyVideogame) {
-		repository.insert(formularyVideogame);
+	public void insert(Videogame videogame) {
+		repository.insert(videogame);
 	}
 	
-	public void delete(Videogame formularyVideogame) {
-		repository.delete(formularyVideogame);
+	public void delete(Videogame videogame) {
+		repository.delete(videogame);
 	}
 	
 	public List<Videogame> listAll() {

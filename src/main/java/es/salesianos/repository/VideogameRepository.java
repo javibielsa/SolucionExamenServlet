@@ -24,7 +24,7 @@ public class VideogameRepository implements Repository<Videogame>{
 	private H2Connection manager = new H2Connection();
 	
 	public Videogame search(Videogame videogame) {
-		Videogame VideogameInDatabase = new Videogame();
+		Videogame videogameInDatabase = new Videogame();
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
 		Connection conn = null;
@@ -34,10 +34,10 @@ public class VideogameRepository implements Repository<Videogame>{
 			prepareStatement.setString(1, videogame.getTitle());
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
-				VideogameInDatabase.setTitle(resultSet.getString(1));
-				VideogameInDatabase.setRecommendedAge(resultSet.getString(2));
-				VideogameInDatabase.setReleaseDate(resultSet.getDate(3));
-				VideogameInDatabase.setConsoleName(resultSet.getString(4));
+				videogameInDatabase.setTitle(resultSet.getString(1));
+				videogameInDatabase.setRecommendedAge(resultSet.getString(2));
+				videogameInDatabase.setReleaseDate(resultSet.getDate(3));
+				videogameInDatabase.setConsoleName(resultSet.getString(4));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public class VideogameRepository implements Repository<Videogame>{
 			manager.close(prepareStatement);
 			manager.close(conn);
 		}
-			return VideogameInDatabase;
+			return videogameInDatabase;
 		}
 	
 	public List<Videogame> searchAll() {
@@ -89,12 +89,12 @@ public class VideogameRepository implements Repository<Videogame>{
 			prepareStatement.setString(1, consoleName);
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
-				Videogame VideogameInDatabase = new Videogame();
-				VideogameInDatabase.setTitle(resultSet.getString(1));
-				VideogameInDatabase.setRecommendedAge(resultSet.getString(2));
-				VideogameInDatabase.setReleaseDate(resultSet.getString(3));
-				VideogameInDatabase.setConsoleName(resultSet.getString(4));
-				listVideogames.add(VideogameInDatabase);
+				Videogame videogameInDatabase = new Videogame();
+				videogameInDatabase.setTitle(resultSet.getString(1));
+				videogameInDatabase.setRecommendedAge(resultSet.getString(2));
+				videogameInDatabase.setReleaseDate(resultSet.getString(3));
+				videogameInDatabase.setConsoleName(resultSet.getString(4));
+				listVideogames.add(videogameInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

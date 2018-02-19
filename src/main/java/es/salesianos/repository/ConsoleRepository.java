@@ -10,7 +10,6 @@ import java.util.List;
 import es.salesianos.connection.H2Connection;
 import es.salesianos.model.Company;
 import es.salesianos.model.Console;
-import es.salesianos.model.Videogame;
 
 public class ConsoleRepository implements Repository<Console>{
 	
@@ -21,7 +20,7 @@ public class ConsoleRepository implements Repository<Console>{
 	private H2Connection manager = new H2Connection();
 	private CompanyRepository repository = new CompanyRepository();
 	
-	public Console search(Console objectInFormulary) {
+	public Console search(Console console) {
 		Console consoleInDatabase = new Console();
 		Connection conn = null;
 		ResultSet resultSet = null;
@@ -29,7 +28,7 @@ public class ConsoleRepository implements Repository<Console>{
 		try {
 			conn = manager.open(jdbcUrl);
 			prepareStatement = conn.prepareStatement(SELECT+" WHERE nombre = ?");
-			prepareStatement.setString(1, objectInFormulary.getName());
+			prepareStatement.setString(1, console.getName());
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				consoleInDatabase.setName(resultSet.getString(1));
@@ -79,7 +78,7 @@ public class ConsoleRepository implements Repository<Console>{
 		return listConsoles;
 	}
 	
-	public List<Console> searchByCompany(String formConsole) {
+	public List<Console> searchByCompany(String console) {
 		List<Console> listConsoles= null;
 		Connection conn = null;
 		ResultSet resultSet = null;
@@ -88,7 +87,7 @@ public class ConsoleRepository implements Repository<Console>{
 			listConsoles= new ArrayList<Console>();
 			conn = manager.open(jdbcUrl);
 			prepareStatement = conn.prepareStatement(SELECT + " WHERE empresa = ?");
-			prepareStatement.setString(1, formConsole);
+			prepareStatement.setString(1, console);
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
 				Console consoleInDatabase = new Console();
@@ -110,13 +109,13 @@ public class ConsoleRepository implements Repository<Console>{
 		return listConsoles;
 	}
 	
-	public void insert(Console formConsole) {
+	public void insert(Console console) {
 		Connection conn = manager.open(jdbcUrl);;
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = conn.prepareStatement(INSERT + " VALUES (?, ?)");
-			preparedStatement.setString(1, formConsole.getName());
-			preparedStatement.setString(2, formConsole.getCompany().getName());
+			preparedStatement.setString(1, console.getName());
+			preparedStatement.setString(2, console.getCompany().getName());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -127,13 +126,13 @@ public class ConsoleRepository implements Repository<Console>{
 		}
 	}
 	
-	public void delete(Console formConsole) {
+	public void delete(Console console) {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			conn = manager.open(jdbcUrl);
 			preparedStatement = conn.prepareStatement(DELETE);
-			preparedStatement.setString(1, formConsole.getName());
+			preparedStatement.setString(1, console.getName());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -13,9 +13,9 @@ public interface Service<T> {
 
 	public List<T> listAll();
 
-	public void insert(T formularyObject);
+	public void insert(T formObject);
 	
-	public void delete(T formularyObject);
+	public void delete(T formObject);
 	
 
 }
