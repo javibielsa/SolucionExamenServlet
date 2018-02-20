@@ -45,7 +45,7 @@ public class CompanyRepository implements Repository<Company>{
 	}
 	
 	public List<Company> searchAll() {
-		List<Company> listCompanys = new ArrayList<Company>();
+		List<Company> listCompany = new ArrayList<Company>();
 		Connection conn = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -57,7 +57,7 @@ public class CompanyRepository implements Repository<Company>{
 				Company companyInDatabase = new Company();
 				companyInDatabase.setName(resultSet.getString(1));
 				companyInDatabase.setCreationDate(resultSet.getString(2));
-				listCompanys.add(companyInDatabase);
+				listCompany.add(companyInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class CompanyRepository implements Repository<Company>{
 			manager.close(prepareStatement);
 			manager.close(conn);
 		}
-		return listCompanys;
+		return listCompany;
 	}
 
 	public void insert(Company company) {
@@ -84,8 +84,8 @@ public class CompanyRepository implements Repository<Company>{
 			throw new RuntimeException(e);
 		}finally {
 			manager.close(preparedStatement);
+			manager.close(conn);
 		}
-		manager.close(conn);
 	}
 	
 	public void delete(Company company) {

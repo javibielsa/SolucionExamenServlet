@@ -49,12 +49,12 @@ public class ConsoleRepository implements Repository<Console>{
 	
 	
 	public List<Console> searchAll() {
-		List<Console> listConsoles= null;
+		List<Console> listConsole= null;
 		Connection conn = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
 		try {
-			listConsoles= new ArrayList<Console>();
+			listConsole= new ArrayList<Console>();
 			conn = manager.open(jdbcUrl);
 			prepareStatement = conn.prepareStatement(SELECT);
 			resultSet = prepareStatement.executeQuery();
@@ -65,7 +65,7 @@ public class ConsoleRepository implements Repository<Console>{
 				company.setName(resultSet.getString(2));
 				consoleInDatabase.setCompany(repository.search(company));
 				
-				listConsoles.add(consoleInDatabase);
+				listConsole.add(consoleInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,16 +75,16 @@ public class ConsoleRepository implements Repository<Console>{
 			manager.close(prepareStatement);
 			manager.close(conn);
 		}
-		return listConsoles;
+		return listConsole;
 	}
 	
 	public List<Console> searchByCompany(String console) {
-		List<Console> listConsoles= null;
+		List<Console> listConsole= null;
 		Connection conn = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
 		try {
-			listConsoles= new ArrayList<Console>();
+			listConsole= new ArrayList<Console>();
 			conn = manager.open(jdbcUrl);
 			prepareStatement = conn.prepareStatement(SELECT + " WHERE empresa = ?");
 			prepareStatement.setString(1, console);
@@ -96,7 +96,7 @@ public class ConsoleRepository implements Repository<Console>{
 				company.setName(resultSet.getString(2));
 				consoleInDatabase.setCompany(repository.search(company));
 				
-				listConsoles.add(consoleInDatabase);
+				listConsole.add(consoleInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,7 +106,7 @@ public class ConsoleRepository implements Repository<Console>{
 			manager.close(prepareStatement);
 			manager.close(conn);
 		}
-		return listConsoles;
+		return listConsole;
 	}
 	
 	public void insert(Console console) {

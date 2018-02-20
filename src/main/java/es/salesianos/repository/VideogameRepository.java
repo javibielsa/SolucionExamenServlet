@@ -51,7 +51,7 @@ public class VideogameRepository implements Repository<Videogame>{
 		}
 	
 	public List<Videogame> searchAll() {
-		List<Videogame> listVideogames = new ArrayList<Videogame>();
+		List<Videogame> listVideogame = new ArrayList<Videogame>();
 		Connection conn = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -65,7 +65,7 @@ public class VideogameRepository implements Repository<Videogame>{
 				videogameInDatabase.setRecommendedAge(resultSet.getString(2)); 
 				videogameInDatabase.setReleaseDate(resultSet.getString(3));
 				videogameInDatabase.setConsoleName(resultSet.getString(4));
-				listVideogames.add(videogameInDatabase);
+				listVideogame.add(videogameInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,11 +75,11 @@ public class VideogameRepository implements Repository<Videogame>{
 			manager.close(prepareStatement);
 			manager.close(conn);
 		}
-		return listVideogames;
+		return listVideogame;
 	}
 
 	public List<Videogame> searchByConsole(String consoleName){
-		List<Videogame> listVideogames = new ArrayList<Videogame>();
+		List<Videogame> listVideogame = new ArrayList<Videogame>();
 		Connection conn = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -94,7 +94,7 @@ public class VideogameRepository implements Repository<Videogame>{
 				videogameInDatabase.setRecommendedAge(resultSet.getString(2));
 				videogameInDatabase.setReleaseDate(resultSet.getString(3));
 				videogameInDatabase.setConsoleName(resultSet.getString(4));
-				listVideogames.add(videogameInDatabase);
+				listVideogame.add(videogameInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -104,7 +104,7 @@ public class VideogameRepository implements Repository<Videogame>{
 			manager.close(prepareStatement);
 			manager.close(conn);
 		}
-		return listVideogames;
+		return listVideogame;
 	}
 	
 	public String ageHelper(String recommendedAge) {
@@ -120,7 +120,7 @@ public class VideogameRepository implements Repository<Videogame>{
 	}
 	
 	public List<Videogame> searchByRecommendedAge(String recommendedAge){
-		List<Videogame> listVideogames = new ArrayList<Videogame>();
+		List<Videogame> listVideogame = new ArrayList<Videogame>();
 		Connection conn = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -134,7 +134,7 @@ public class VideogameRepository implements Repository<Videogame>{
 				videogameInDatabase.setRecommendedAge(resultSet.getString(2));
 				videogameInDatabase.setReleaseDate(resultSet.getString(3));
 				videogameInDatabase.setConsoleName(resultSet.getString(4));
-				listVideogames.add(videogameInDatabase);
+				listVideogame.add(videogameInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -144,7 +144,7 @@ public class VideogameRepository implements Repository<Videogame>{
 			manager.close(prepareStatement);
 			manager.close(conn);
 		}
-		return listVideogames;
+		return listVideogame;
 	}
 	
 	public String selectOrder(String order) {
@@ -156,7 +156,7 @@ public class VideogameRepository implements Repository<Videogame>{
 	}
 	
 	public List<Videogame> orderBy(String recommendedAge, String order){
-		List<Videogame> listVideogames = new ArrayList<Videogame>();
+		List<Videogame> listVideogame = new ArrayList<Videogame>();
 		Connection conn = null;
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -170,7 +170,7 @@ public class VideogameRepository implements Repository<Videogame>{
 				videogameInDatabase.setRecommendedAge(resultSet.getString(2));
 				videogameInDatabase.setReleaseDate(resultSet.getString(3));
 				videogameInDatabase.setConsoleName(resultSet.getString(4));
-				listVideogames.add(videogameInDatabase);
+				listVideogame.add(videogameInDatabase);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -180,7 +180,7 @@ public class VideogameRepository implements Repository<Videogame>{
 			manager.close(prepareStatement);
 			manager.close(conn);
 		}
-		return listVideogames;
+		return listVideogame;
 	}
 	
 	public void insert(Videogame videogame) {
