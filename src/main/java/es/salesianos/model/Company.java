@@ -1,14 +1,12 @@
 package es.salesianos.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 public class Company {
 	
 	private String name;
 	private Date creationDate;
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	//private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public String getName() {
 		return name;
@@ -26,7 +24,7 @@ public class Company {
 		this.creationDate = creationDate;
 	}
 	
-	public void setCreationDate(String creationDate) {
+	/*public void setCreationDate(String creationDate) {
 		try {
 			this.creationDate = sdf.parse(creationDate);
 		} catch (ParseException e) {
@@ -37,6 +35,6 @@ public class Company {
 	@Override
 	public String toString() {
 		return "Empresa [Nombre=" + name + ", fechaCreacion=" + creationDate + "]";
-	}
+	}*/
 
 }

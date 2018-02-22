@@ -2,12 +2,10 @@ package es.salesianos.repository;
 
 import java.util.List;
 
-import es.salesianos.model.Videogame;
-
 public interface Repository<T> {
 	
 	public static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'";
-
+	
 	public void insert(T t);
 
 	public void delete(T t);

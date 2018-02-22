@@ -3,7 +3,7 @@ package es.salesianos.model;
 public class Console {
 	
 	private String name;
-	private Company company;
+	private String companyName;
 	
 	public String getName() {
 		return name;
@@ -11,11 +11,11 @@ public class Console {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Company getCompany() {
-		return company;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setCompanyName(String string) {
+		this.companyName = string;
 	}
 	
 	

@@ -1,224 +1,115 @@
 package es.salesianos.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import es.salesianos.connection.H2Connection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import es.salesianos.model.Console;
 import es.salesianos.model.Videogame;
 
-public class VideogameRepository implements Repository<Videogame>{
+@Repository
+public class VideogameRepository implements es.salesianos.repository.Repository<Videogame>{
 	
-	private static final String SELECT = "SELECT * FROM VIDEOJUEGOS";
-	private static final String INSERT = "INSERT INTO VIDEOJUEGOS (titulo,edadRecomendada,fechaLanzamiento, nombreConsola)";
-	private static final String DELETE = "DELETE * FROM VIDEOJUEGOS WHERE titulo = ?";
+	private static final String SELECT = "SELECT * FROM VIDEOGAMES";
+	private static final String INSERT = "INSERT INTO VIDEOGAMES (title,recommendedAge,releaseDate,consoleName) VALUES (:title,:recommendedAge,:releaseDate, :consoleName)";
+	private static final String DELETE = "DELETE * FROM VIDEOGAMES WHERE title = :title";
+	private static final String SELECTBYTITLE = SELECT + " WHERE title = :title";
+	private static final String SELECTBYCONSOLE = SELECT + " WHERE consoleName = :consoleName";
+	private static final String SELECTBYRECOMMENDEDAGE = SELECT + " WHERE recommendedAge = :recommendedAge";
 	
-	private static final String AGETP = "SELECT * FROM VIDEOJUEGOS";
-	private static final String AGE7 = "SELECT * FROM VIDEOJUEGOS WHERE edadRecomendada = '+7' or edadRecomendada = '+13' or edadRecomendada = '+18'";
-	private static final String AGE13 = "SELECT * FROM VIDEOJUEGOS WHERE edadRecomendada = '+13' or edadRecomendada = '+18'";
-	private static final String AGE18 = "SELECT * FROM VIDEOJUEGOS WHERE edadRecomendada = '+18'";
-	
-	private H2Connection manager = new H2Connection();
+	private static Logger log = LogManager.getLogger(VideogameRepository.class);
+
+	@Autowired
+	private JdbcTemplate template;
+
+	@Autowired
+	private NamedParameterJdbcTemplate namedJdbcTemplate;
 	
 	public Videogame search(Videogame videogame) {
-		Videogame videogameInDatabase = new Videogame();
-		ResultSet resultSet = null;
-		PreparedStatement prepareStatement = null;
-		Connection conn = null;
-		try {
-			conn = manager.open(jdbcUrl);
-			prepareStatement = conn.prepareStatement(SELECT + " WHERE titulo = ?");
-			prepareStatement.setString(1, videogame.getTitle());
-			resultSet = prepareStatement.executeQuery();
-			while(resultSet.next()){
-				videogameInDatabase.setTitle(resultSet.getString(1));
-				videogameInDatabase.setRecommendedAge(resultSet.getString(2));
-				videogameInDatabase.setReleaseDate(resultSet.getDate(3));
-				videogameInDatabase.setConsoleName(resultSet.getString(4));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}finally {
-			manager.close(resultSet);
-			manager.close(prepareStatement);
-			manager.close(conn);
-		}
-			return videogameInDatabase;
-		}
-	
-	public List<Videogame> searchAll() {
-		List<Videogame> listVideogame = new ArrayList<Videogame>();
-		Connection conn = null;
-		ResultSet resultSet = null;
-		PreparedStatement prepareStatement = null;
-		try {
-			conn = manager.open(jdbcUrl);
-			prepareStatement = conn.prepareStatement("SELECT * FROM VIDEOJUEGOS");
-			resultSet = prepareStatement.executeQuery();
-			while(resultSet.next()){
-				Videogame videogameInDatabase = new Videogame();
-				videogameInDatabase.setTitle(resultSet.getString(1));
-				videogameInDatabase.setRecommendedAge(resultSet.getString(2)); 
-				videogameInDatabase.setReleaseDate(resultSet.getString(3));
-				videogameInDatabase.setConsoleName(resultSet.getString(4));
-				listVideogame.add(videogameInDatabase);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}finally {
-			manager.close(resultSet);
-			manager.close(prepareStatement);
-			manager.close(conn);
-		}
+		log.debug("Ejecutando la consulta: " + SELECTBYTITLE);
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("title", videogame.getTitle());
+		namedJdbcTemplate.update(SELECTBYTITLE, params);
+		Videogame listVideogame = (Videogame) template.query(SELECTBYTITLE, new BeanPropertyRowMapper(Videogame.class));
 		return listVideogame;
 	}
 
-	public List<Videogame> searchByConsole(String consoleName){
-		List<Videogame> listVideogame = new ArrayList<Videogame>();
-		Connection conn = null;
-		ResultSet resultSet = null;
-		PreparedStatement prepareStatement = null;
-		try {
-			conn = manager.open(jdbcUrl);
-			prepareStatement = conn.prepareStatement(SELECT + " WHERE nombreConsola = ?");
-			prepareStatement.setString(1, consoleName);
-			resultSet = prepareStatement.executeQuery();
-			while(resultSet.next()){
-				Videogame videogameInDatabase = new Videogame();
-				videogameInDatabase.setTitle(resultSet.getString(1));
-				videogameInDatabase.setRecommendedAge(resultSet.getString(2));
-				videogameInDatabase.setReleaseDate(resultSet.getString(3));
-				videogameInDatabase.setConsoleName(resultSet.getString(4));
-				listVideogame.add(videogameInDatabase);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}finally {
-			manager.close(resultSet);
-			manager.close(prepareStatement);
-			manager.close(conn);
-		}
+	public List<Videogame> searchAll() {
+		log.debug("Ejecutando la consulta: " + SELECT);
+		List<Videogame> listVideogame = template.query(SELECT, new BeanPropertyRowMapper(Videogame.class));
 		return listVideogame;
 	}
 	
-	public String ageHelper(String recommendedAge) {
-		if(recommendedAge.equals("TP")) {
-			return AGETP;
-		}else if(recommendedAge.equals("+7")) {
-			return AGE7;
-		}else if(recommendedAge.equals("+13")) {
-			return AGE13;
-		}else {
-			return AGE18;
-		}
+	public List<Videogame> searchByConsole(String consoleName){
+		log.debug("Ejecutando la consulta: " + SELECTBYCONSOLE);
+		List<Videogame> listVideogame = namedJdbcTemplate.query(SELECTBYCONSOLE,
+                new MapSqlParameterSource("consoleName", consoleName), (resultSet, i) -> {
+                    return toVideogame(resultSet);
+                });	
+		return listVideogame;
 	}
 	
 	public List<Videogame> searchByRecommendedAge(String recommendedAge){
-		List<Videogame> listVideogame = new ArrayList<Videogame>();
-		Connection conn = null;
-		ResultSet resultSet = null;
-		PreparedStatement prepareStatement = null;
-		try {
-			conn = manager.open(jdbcUrl);
-			prepareStatement = conn.prepareStatement(ageHelper(recommendedAge));
-			resultSet = prepareStatement.executeQuery();
-			while(resultSet.next()){
-				Videogame videogameInDatabase = new Videogame();
-				videogameInDatabase.setTitle(resultSet.getString(1));
-				videogameInDatabase.setRecommendedAge(resultSet.getString(2));
-				videogameInDatabase.setReleaseDate(resultSet.getString(3));
-				videogameInDatabase.setConsoleName(resultSet.getString(4));
-				listVideogame.add(videogameInDatabase);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}finally {
-			manager.close(resultSet);
-			manager.close(prepareStatement);
-			manager.close(conn);
-		}
+		log.debug("Ejecutando la consulta: " + SELECTBYRECOMMENDEDAGE);
+		List<Videogame> listVideogame = namedJdbcTemplate.query(SELECTBYRECOMMENDEDAGE,
+                new MapSqlParameterSource("recommendedAge", recommendedAge), (resultSet, i) -> {
+                    return toVideogame(resultSet);
+                });	
 		return listVideogame;
 	}
 	
+	private Videogame toVideogame(ResultSet resultSet) throws SQLException {
+		Videogame videogameInDatabase = new Videogame();
+		videogameInDatabase.setTitle((resultSet.getString("title")));
+		videogameInDatabase.setRecommendedAge((resultSet.getString("recommendedAge")));
+		videogameInDatabase.setReleaseDate((resultSet.getDate("releaseDate")));
+		videogameInDatabase.setConsoleName((resultSet.getString("consoleName")));
+        return videogameInDatabase;
+    }
+	
 	public String selectOrder(String order) {
 		if(order.equals("orderByTitle")) {
-			return " ORDER BY titulo ASC";
+			return " ORDER BY title ASC";
 		}else{
-			return " ORDER BY fechaLanzamiento ASC";
+			return " ORDER BY releaseDate ASC";
 		}
 	}
 	
 	public List<Videogame> orderBy(String recommendedAge, String order){
-		List<Videogame> listVideogame = new ArrayList<Videogame>();
-		Connection conn = null;
-		ResultSet resultSet = null;
-		PreparedStatement prepareStatement = null;
-		try {
-			conn = manager.open(jdbcUrl);
-			prepareStatement = conn.prepareStatement(ageHelper(recommendedAge) + selectOrder(order));
-			resultSet = prepareStatement.executeQuery();
-			while(resultSet.next()){
-				Videogame videogameInDatabase = new Videogame();
-				videogameInDatabase.setTitle(resultSet.getString(1));
-				videogameInDatabase.setRecommendedAge(resultSet.getString(2));
-				videogameInDatabase.setReleaseDate(resultSet.getString(3));
-				videogameInDatabase.setConsoleName(resultSet.getString(4));
-				listVideogame.add(videogameInDatabase);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}finally {
-			manager.close(resultSet);
-			manager.close(prepareStatement);
-			manager.close(conn);
-		}
+		log.debug("Ejecutando la consulta: " + SELECTBYRECOMMENDEDAGE + selectOrder(order));
+		List<Videogame> listVideogame = namedJdbcTemplate.query(SELECTBYRECOMMENDEDAGE + selectOrder(order),
+                new MapSqlParameterSource("recommendedAge", recommendedAge), (resultSet, i) -> {
+                    return toVideogame(resultSet);
+                });	
 		return listVideogame;
 	}
 	
 	public void insert(Videogame videogame) {
-		Connection conn = null;
-		PreparedStatement preparedStatement = null;
-		try {
-			conn = manager.open(jdbcUrl);
-			preparedStatement = conn.prepareStatement(INSERT + "VALUES (?, ?, ?, ?)");
-			preparedStatement.setString(1, videogame.getTitle());
-			preparedStatement.setString(2, videogame.getRecommendedAge());
-			preparedStatement.setDate(3, new java.sql.Date(videogame.getReleaseDate().getTime()));
-			preparedStatement.setString(4, videogame.getConsoleName());
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}finally {
-			manager.close(preparedStatement);
-			manager.close(conn);
-		}
+		log.debug("Ejecutando la consulta: " + INSERT);
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("title", videogame.getTitle());
+		params.addValue("recommendedAge", videogame.getRecommendedAge());
+		params.addValue("releaseDate", videogame.getReleaseDate());
+		params.addValue("consoleName", videogame.getConsoleName());
+		namedJdbcTemplate.update(INSERT, params);
 	}
 	
 	public void delete(Videogame videogame) {
-		Connection conn = null;
-		PreparedStatement preparedStatement = null;
-		try {
-			conn = manager.open(jdbcUrl);
-			preparedStatement = conn.prepareStatement(DELETE);
-			preparedStatement.setString(1, videogame.getTitle());
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}finally {
-			manager.close(preparedStatement);
-			manager.close(conn);
-		}
+		log.debug("Ejecutando la consulta: " + DELETE);
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("title", videogame.getTitle());
+		namedJdbcTemplate.update(DELETE, params);
 	}
+	
 }
 	
 	

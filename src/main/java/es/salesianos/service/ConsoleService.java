@@ -2,39 +2,42 @@ package es.salesianos.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
-import es.salesianos.assembler.Assembler;
-import es.salesianos.assembler.CompanyAssembler;
-import es.salesianos.assembler.ConsoleAssembler;
-import es.salesianos.model.Company;
 import es.salesianos.model.Console;
-import es.salesianos.model.Videogame;
 import es.salesianos.repository.ConsoleRepository;
 
-public class ConsoleService implements Service<Console>{
+@Service
+@Profile("database")
+public class ConsoleService implements es.salesianos.service.Service<Console>{
 	
-	private ConsoleRepository repository = new ConsoleRepository();
-	private Assembler<Console> assembler = new ConsoleAssembler();
+	private static Logger log = LogManager.getLogger(ConsoleService.class);
 	
-	public Console assembleObjectFromRequest(HttpServletRequest req) {
-		return assembler.assembleObjectFrom(req);
-	}
+	@Autowired
+	private ConsoleRepository repository;
 	
 	public void insert(Console console) {
+		log.debug("Insertando la consola " + console.getName());
 		repository.insert(console);
 	}
 	
 	public void delete(Console console) {
+		log.debug("Borrando la consola " + console.getName());
 		repository.delete(console);
 	}
 	
 	public List<Console> listAll(){
+		log.debug("Listando todas las consolas...");
 		return repository.searchAll();
 	}
 	
-	public List<Console> listByCompany(String object){
-		return repository.searchByCompany(object);
+	public List<Console> listByCompany(String companyName){
+		log.debug("Listando todas las consolas de la empresa " + companyName);
+		return repository.searchByCompany(companyName);
 	}
 
 

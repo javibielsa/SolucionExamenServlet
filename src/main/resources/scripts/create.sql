@@ -1,14 +1,14 @@
-create table IF NOT EXISTS EMPRESAS(
-	nombre varchar(25) PRIMARY KEY,
-	fechaCreacion date
+create table IF NOT EXISTS COMPANIES(
+	name varchar(25) PRIMARY KEY,
+	creationDate date
 );
-create table IF NOT EXISTS CONSOLAS(
-	nombre varchar(25) PRIMARY KEY,
-	empresa varchar(25)
+create table IF NOT EXISTS CONSOLES(
+	name varchar(25) PRIMARY KEY,
+	companyName varchar(25)
 );
-create table IF NOT EXISTS VIDEOJUEGOS(
-	titulo varchar(25) PRIMARY KEY,
-	edadRecomendada varchar(25),
-	fechaLanzamiento date,
-	nombreConsola varchar(25)
+create table IF NOT EXISTS VIDEOGAMES(
+	title varchar(25) PRIMARY KEY,
+	recommendedAge varchar(25),
+	releaseDate date,
+	consoleName varchar(25)
 );

@@ -1,16 +1,12 @@
 package es.salesianos.model;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 public class Videogame {
 	
 	private String title;
 	private String recommendedAge;
 	private Date releaseDate;
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private String consoleName;
 	
 	public String getTitle() {
@@ -35,14 +31,6 @@ public class Videogame {
 	
 	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
-	}
-	
-	public void setReleaseDate(String releaseDate) {
-		try {
-			this.releaseDate = sdf.parse(releaseDate);
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	public String getConsoleName() {
