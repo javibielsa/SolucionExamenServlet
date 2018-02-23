@@ -7,20 +7,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 public class DatabaseConfig {
-
-
-	/**
-	 * The @Bean annotation is used to declare a Spring bean and the DI
-	 * requirements. The @Bean annotation is equivalent to the <bean> tag, the
-	 * method name is equivalent to the id attribute within the <bean> tag.
-	 * 
-	 * <bean id="mySqlDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
-	 * destroy-method="close" p:driverClassName="${jdbc.mysql.driverClassName}"
-	 * p:url="${jdbc.mysql.url}" p:username="${jdbc.mysql.username}" p:password=
-	 * "${jdbc.mysql.password}" />
-	 * 
-	 * @return
-	 */
+	
 	@Bean
 	@Profile(value = "h2")
 	public DriverManagerDataSource h2DataSource() {
@@ -31,16 +18,5 @@ public class DatabaseConfig {
 		dataSource.setPassword("");
 		return dataSource;
 	}
-	
-	@Bean
-	@Profile(value = "postgres")
-	public DriverManagerDataSource postgresDataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("org.postgresql.Driver");
-		dataSource.setUrl("jdbc:postgres:localhost:5432'");
-		dataSource.setUsername("sa");
-		dataSource.setPassword("");
-		return dataSource;
-}
 
 }
