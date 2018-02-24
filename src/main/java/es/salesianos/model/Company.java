@@ -23,18 +23,5 @@ public class Company {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	
-	/*public void setCreationDate(String creationDate) {
-		try {
-			this.creationDate = sdf.parse(creationDate);
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public String toString() {
-		return "Empresa [Nombre=" + name + ", fechaCreacion=" + creationDate + "]";
-	}*/
 
 }

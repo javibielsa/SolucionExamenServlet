@@ -17,7 +17,7 @@ import es.salesianos.service.VideogameService;
 @Controller
 public class VideogameController {
 	
-private static Logger log = LogManager.getLogger(VideogameController.class);
+	private static Logger log = LogManager.getLogger(VideogameController.class);
 	
 	@Autowired
 	private VideogameService service;
