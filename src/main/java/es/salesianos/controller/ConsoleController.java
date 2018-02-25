@@ -28,7 +28,7 @@ public class ConsoleController {
 	
 	@PostMapping("registerconsole")
 	public ModelAndView consoleInsert(@ModelAttribute Console console) {
-		log.debug("Insertando la empresa:" + console.getName());
+		log.debug("Insertando la consola:" + console.getName());
 		service.insert(console);
 		ModelAndView modelAndView = new ModelAndView("RegisterConsole", "command", new Console());
 		return modelAndView;
