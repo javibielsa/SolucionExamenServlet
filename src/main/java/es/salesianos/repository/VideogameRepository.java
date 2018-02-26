@@ -39,7 +39,7 @@ public class VideogameRepository implements es.salesianos.repository.Repository<
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("title", videogame.getTitle());
 		namedJdbcTemplate.update(SELECTBYTITLE, params);
-		Videogame listVideogame = (Videogame) template.query(SELECTBYTITLE, new BeanPropertyRowMapper(Videogame.class));
+		Videogame listVideogame = template.query(SELECTBYTITLE, new BeanPropertyRowMapper(Videogame.class));
 		return listVideogame;
 	}
 
