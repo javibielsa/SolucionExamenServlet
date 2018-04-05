@@ -40,7 +40,7 @@ public class ConsoleRepository implements es.salesianos.repository.Repository<Co
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("name", console.getName());
 		namedJdbcTemplate.update(SELECTBYNAME, params);
-		Console listConsole = template.query(SELECTBYNAME, new BeanPropertyRowMapper(Console.class));
+		Console listConsole = (Console) template.query(SELECTBYNAME, new BeanPropertyRowMapper(Console.class));
 		return listConsole;
 	}
 

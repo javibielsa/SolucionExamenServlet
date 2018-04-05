@@ -34,7 +34,7 @@ public class CompanyRepository implements es.salesianos.repository.Repository<Co
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("name", company.getName());
 		namedJdbcTemplate.update(SELECTBYNAME, params);
-		Company listCompany = template.query(SELECTBYNAME, new BeanPropertyRowMapper(Company.class));
+		Company listCompany = (Company) template.query(SELECTBYNAME, new BeanPropertyRowMapper(Company.class));
 		return listCompany;
 	}
 
